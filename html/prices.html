@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald&display=swap" rel="stylesheet">
+    
+   	<title></title>
+</head>
+	<body>
+		<script src="./parts/header.js"></script>
+		<div class="help"><button onclick="showHelp('memberships')">?</button></div>
+		<div id="filterMembership">
+			<div class="filterMembership_item">
+				<p class="black_text no_margin no_wrap">Тип абонемента</p>
+				<select id="membershipFilterType">
+				</select>
+			</div>
+			<div class="filterMembership_item" >
+				<p class="filterName black_text no_margin no_wrap">Время</p>
+				<select id="membershipFilterTime" ></select>
+			</div>
+			<div class="filterMembership_item" >
+				<p class="black_text no_margin no_wrap">Срок действия</p>
+				<select id="membershipFilterDuration"></select>
+			</div>
+			<div id="filterMembership_itemPrice" class="filterMembership_item">
+				<div class="filterPrice">
+						<p class="black_text no_margin no_wrap">Цена</p>
+						<label for="filterMembershipsById" id="label_filterMembershipsById"></label>
+				</div>
+				
+				<input id="filterMembershipsById" type="range" class="no_margin"/>
+				
+			</div>
+			<div id="filterMembership_buttonReload" class="filterMembership_item">
+					<button onclick="reloadPageMemberships()" class="reloadMemberships">Сбросить</button>
+				</div>
+		</div>
+		<div id="membershipContainer" class="memberships"></div>
+		<div id="allFormMembership" class="membershipForm_background">
+			<div class="membershipForm">
+				<div class="membershipForm__header">
+					<h2 class="black_text no_margin-top">Абонемент</h2>
+					<button class="membershipForm__buttonCancel" onclick="closeFormMembership()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+				</div>				
+				<div  class="membershipForm__items">	
+					<div>						
+						<div id="current_membership"></div>				
+					</div>
+					<div class="membershipForm__items_form">
+						<h2 class="black_text no_margin-top no_margin-bottom">Ваши данные</h2>
+						<form id="membership_form" class="membership_form">						
+							<label class="input_membership">Имя<input type="text" autofocus=true autocomplete="off" id="name" onfocus="if(this.classList.contains('invalid')){
+								this.classList.remove('invalid');}"></label>
+							<div class="wrongInput"></div>
+							<label class="input_membership">Фамилия<input type="text" autocomplete="off"  id="surname" onfocus="if(this.classList.contains('invalid')){
+								this.classList.remove('invalid');}"></label>
+							<div class="wrongInput"></div>
+							<label class="input_membership">Почта<input type="email" id="email" autocomplete="off" onfocus="removeInvalidEmail()" onblur="checkPriceEmail()"></label>
+							<div id='wrongPriceEmail' class="wrongInput"></div>
+							<label class="input_membership">Телефон<input type="tel" id="phone" autocomplete="off" onfocus="removeInvalidPhone()" onblur="checkPhone()"></label>	
+							<div id="wrongPhone" class="wrongInput"></div>						
+							<label class="input_membership">Дата рождения<input type="date" id="birthday"onfocus="if(this.classList.contains('invalid')){
+								this.classList.remove('invalid');}"></label>						
+						</form>	
+						<button class="membershipForm__buttonSend" id="membershipForm__buttonSend">Оформить</button>
+					</div>								
+				</div>
+			</div>			
+		</div>	
+		<div id="messageForAddMembership" class="membershipForm_background">
+			<div class="messageForAddMembership_block">
+				<div>
+					<p id="messageForAddMembership_text" class="black_text"></p>
+				</div>
+				<div id="messageForAddMembership_buttons">
+					
+				</div>
+			</div>			
+		</div>
+		
+		
+		<script src="./parts/footer.js"></script>
+		<script src="./src/general.js"></script>
+		<script src="./src/sendToServer.js"></script>
+		<script src="./src/memberships.js"></script>
+		
+		
+	</body>
+</html>

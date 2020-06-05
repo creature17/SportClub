@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/coach_style.css">
+     <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald&display=swap" rel="stylesheet">
+     
+   <title></title>
+</head>
+	<body>		
+		<script src="./parts/header_customer.js"></script>
+		<div class="help"><button onclick="showHelp('coaches')">?</button></div>
+        <div id="filterCoaches">
+			<div class="filterFreeCoachTime">
+				<div class="filterMembership_item" >
+					<p class="filterName black_text no_margin no_wrap">Дата</p>
+					<select id="dateToFilterCoach" onchange="initTimeSelect(this.value)"></select>
+				</div>
+				<div class="filterMembership_item" >
+					<p class="black_text no_margin no_wrap">Время</p>
+					<select id="timeToFilterCoach"></select>
+				</div>
+				<button class="reloadMemberships" onclick="showFreeCoaches()">Применить</button>
+			</div>
+			
+			<div id="" class="filterMembership_item">
+				<div class="filterPrice">
+                    <p class="black_text no_margin no_wrap">Цена</p>
+                    <label id="trainingPrice"></label>
+				</div>				
+				<input id="trainingPriceRange" type="range" class="no_margin"/>				
+			</div>
+			<div id="" class="filterMembership_item">
+					<button onclick="reloadPageCoaches()" class="reloadMemberships">Сбросить</button>
+				</div>
+		</div>
+	
+		<div id="allCoaches" class="coaches"></div>	
+
+		<div id="recordCustomerTraining" class="membershipForm_background">
+			<div class="membershipForm formWidth300">
+				<div class="membershipForm__header">
+					<h2 class="black_text no_margin-top">Запись</h2>
+					<button class="membershipForm__buttonCancel" onclick="closeFormTraining()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+				</div>	
+				<div class="inputRecordTraining">
+					<p class="black_text lineRecordTraining" id="coachName"></p>
+					<label class="lineRecordTraining">Дата <select id="selectDateCoachTr" onchange="initTimeSelectCoach(this.value)"></select> </label>				
+					<label class="lineRecordTraining">Время <select id="selectTimeCoachTr"></select></label>	
+					<button class="button_create_membership" onclick="makeRecordTraining()">Записаться</button>	
+				</div>
+										
+			</div>
+		</div>
+				
+			
+	
+		<script src="./parts/footer.js"></script>
+		<script src="./src/general.js"></script>
+		<script src="./src/generalCustomer.js"></script>
+        <script src="./src/sendToServer.js"></script>
+		<script src="./src/coachesCustomer.js"></script>
+		
+	</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald&display=swap" rel="stylesheet">
+    
+   	<title></title>
+</head>
+	<body style="width: 100vw;">
+		<div class="admin">
+            <div class="admin__menu" id="adminMenu">
+                <div onclick="showMemberships();activeLink('memId')" id="memId">Абонементы</div>
+                <div onclick="showCoaches()" id="coachId">Тренера</div>
+                <!-- <div onclick="showTrainings();activeLink('trainId')" id="trainId">Тренировки</div> -->
+                <div onclick="showCustomers();activeLink('custId')" id="custId">Клиенты</div>
+                <!-- <div onclick="showStatistic();activeLink('statId')" id="statId">Статистика</div> -->
+                <div onclick="leavePage()">Выйти</div>
+            </div>
+            <div id="admin__info">
+                <div style="display: none;" id="adminMemberships"></div>
+                <div style="display: none;" id="adminCoaches" >      
+                    <button class="helpAdmin" style="top: 10px;" onclick="showHelp('admincoach')">?</button>              
+                    <div class="admin_line"> Выберите месяц и год для отображения данных
+                        <select  id="monthStatistic" style="margin: 0 1%;">
+                            <option value="1">январь</option>
+                            <option value="2">февраль</option>
+                            <option value="3">март</option>
+                            <option value="4">апрель</option>
+                            <option value="5">май</option>
+                            <option value="6" selected>июнь</option>
+                            <option value="7">июль</option>
+                            <option value="8">август</option>
+                            <option value="9">сентябрь</option>
+                            <option value="10">октябрь</option>
+                            <option value="11">ноябрь</option>
+                            <option value="12">декабрь</option>
+                        </select>
+                        <select  style="margin: 0 1%;">
+                            <option value="">2019</option>
+                            <option value="" selected>2020</option>
+                        </select>
+                        <button class="btnForAdmin" onclick="initAdminCoaches(monthStatistic.value)">Применить</button>
+                    </div>
+                    <div class="admin_line">
+                        <div class="admin_table" style="width: 100%;" >
+                            <div class="admin_table_line adminText" style="margin-left: 50px; padding:10px 0; border-bottom: 0px;">
+                                Тренера<button  class="addNewMship" style="margin-left: 50px" id="btnAdd" onclick="openFormForNewCoach()">+</button>
+                            </div>
+                            <div class="admin_table_line" style="background-color:#ae99b9;padding: 10px 0; border-bottom: 0px;" >
+                                <p>ФИО</p>
+                                <p>Должность</p>
+                                <p>Часы работы</p>
+                                <p>Рейтинг</p>
+                                <p>Зарплата</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; height: 280px; overflow-y: scroll;" id="adminCoachesData"></div>
+                        </div>
+                    </div>
+                    <div class="admin_line">
+                        <div class="admin_coach_chart" ><canvas id="adminCoachRatingChart"></canvas></div>
+                        <div class="admin_table" >
+                            <div class="admin_table_line" style="border-bottom: 0px;"><p>Должности</p><p class="admin_edit_btn" onclick="openFormForNewSallary()">&#9998</p></div>
+                            <div class="admin_table_line" style="background-color: #8995c7;padding: 10px 0; border-bottom: 0px;">
+                                <p>Название</p>
+                                <p>ЗП/час</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column;" id="adminCoachLevel"></div>
+                        </div>                       
+                        <div class="admin_coach_chart" ><canvas id="adminCoachCountChart"></canvas></div>
+                    </div>
+                </div>
+                <div style="display: none;" id="adminCustomers">
+                    <button class="helpAdmin" style="top: 20px;" onclick="showHelp('admincustomer')">?</button>   
+                    <div style="display: flex; justify-content: space-around; margin:20px 0;">
+                        <input type="text" class="searchInputName" name="t1" id="searchWindow" placeholder="Поиск"/>
+                        <button class="btnForAdmin" style="background-color: #f8e88c;" onclick="drawCustomers('all')">Все</button>
+                        <button class="btnForAdmin" style="background-color: #f8e88c;" onclick="drawCustomers('waiting')">Не активированные</button>
+                        <button class="btnForAdmin" style="background-color: #f8e88c;" onclick="drawCustomers('active')">Активные</button>
+                        <button class="btnForAdmin" style="background-color: #f8e88c;" onclick="drawCustomers('finished')">Истек срок действия</button>
+                    </div>
+                    <div  class="admin_table" style="width: 98%; margin-bottom: 20px;" >                        
+                        <div style="display: flex; background-color: #ae99b9; padding: 10px 0;">
+                            <p>ФИО</p>
+                            <p>Абонемент</p>
+                            <p>Срок действия</p>
+                            <p>Дата активации</p>
+                            <p>Статус</p>
+                            <p></p>                           
+                        </div>
+                        <div id="adminCustomersDiv"></div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div id="createNewMship" class="membershipForm_background">
+            <div class="membershipForm formWidth300">
+                <div class="membershipForm__header">
+                    <h2 class="black_text no_margin-top">Абонемент</h2>
+                    <button class="membershipForm__buttonCancel" onclick="closeFormNewMship()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+                </div>	
+                <div class="inputRecordTraining">
+                    <p class="black_text lineRecordTraining" id="mshipTimein"></p>
+                    <label class="lineRecordTraining">Тип <select id="newMshipType">
+                        <option value="Классический">Классический</option>
+                        <option value="Премиум">Премиум</option>
+                        <option value="Люкс">Люкс</option>
+                        </select> 
+                    </label>				
+                    <label class="lineRecordTraining">Срок (в месяцах)<input type="number" style="width:50px" max="12" min="1" id="inputDurationForNewMship" onkeypress="return false"></label>	
+                    <label class="lineRecordTraining">Стоимость<input type="text" style="width:100px" id="inputPriceForNewMship"></select></label>	
+                    <button class="button_create_membership" onclick="makeNewMship()">Создать</button>	
+                </div>                                        
+            </div>
+        </div>
+        <div id="createNewCoach" class="membershipForm_background">
+            <div class="membershipForm formWidth300">
+                <div class="membershipForm__header">
+                    <h2 class="black_text no_margin-top">Тренер</h2>
+                    <button class="membershipForm__buttonCancel" onclick="closeFormNewCoach()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+                </div>	
+                <div class="inputRecordTraining">
+                    <p class="black_text lineRecordTraining" id=""></p>
+                    <label class="lineRecordTraining" style="width: 250px;">Должность <select id="levelSelect" style="width:120px;">
+                        <option value="1">Младший тренер</option>
+                        <option value="2">Старший тренер</option>
+                        <option value="3">VIP тренер</option>
+                        </select> 
+                    </label>				
+                    <label class="lineRecordTraining" style="width: 250px;">Имя<input style="width:150px;" type="text"  id="inputCoachName"></label>	
+                    <label class="lineRecordTraining" style="width: 250px;">Фамилия<input style="width:150px;" type="text" id="inputCoachSurname"></label>	
+                    <button class="button_create_membership" onclick="makeNewCoach()" style="width: 250px;">Добавить</button>	
+                </div>                                        
+            </div>
+        </div>
+        <div id="editCoachSallary" class="membershipForm_background">
+            <div class="membershipForm formWidth300">
+                <div class="membershipForm__header">
+                    <h2 class="black_text no_margin-top">Зарплата</h2>
+                    <button class="membershipForm__buttonCancel" onclick="closeFormEditSallary()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+                </div>	
+                <div class="inputRecordTraining">
+                    <label class="lineRecordTraining" style="width: 250px;">Должность <select id="levelSelectSallary" style="width:120px;">
+                        <option value="1">Младший тренер</option>
+                        <option value="2">Старший тренер</option>
+                        <option value="3">VIP тренер</option>
+                        </select> 
+                    </label>				
+                    <label class="lineRecordTraining" style="width: 250px;">Зарплата<input style="width:150px;" type="text"  id="inputCoachSallary"></label>		
+                    <button class="button_create_membership" onclick="editCoachSallaryFunc()" style="width: 250px;">Изменить</button>	
+                </div>                                        
+            </div>
+        </div>
+        <div id="editRemoveCoach" class="membershipForm_background">
+            <div class="membershipForm formWidth300">
+                <div class="membershipForm__header">
+                    <h2 class="black_text no_margin-top"></h2>
+                    <button class="membershipForm__buttonCancel" onclick="closeFormEditRemoveCoach()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+                </div>	
+                <div class="inputRecordTraining">
+                    <p id="coachNameToEdit" style="margin: 10px auto;" class="black_text"></p>
+                    <label class="lineRecordTraining" style="width: 250px;">Должность <select id="editCoachLevel" style="width:120px;">
+                        <option value="1">младший тренер</option>
+                        <option value="2">старший тренер</option>
+                        <option value="3">VIP тренер</option>
+                        </select> 
+                    </label>				                    		
+                    <button class="button_create_membership" style="margin: 5px auto;" onclick="coachSchedule(coachNameToEdit.textContent)" style="width: 250px;">Расписание</button>	
+                    <button class="button_create_membership" style="margin: 5px auto;" onclick="editCoachLevelFunc(coachNameToEdit.textContent)" style="width: 250px;">Назначить</button>	
+                    <button class="button_create_membership" style="margin: 5px auto;" onclick="removeCoachFunc(coachNameToEdit.textContent)" style="width: 250px;">Уволить</button>	
+                </div>                                        
+            </div>
+        </div>
+        <div id="scheduleDiv" class="membershipForm_background">
+            <div class="membershipForm">
+                <div class="membershipForm__header">
+                    <h2 class="black_text" style="margin: 0;">Расписание</h2>
+                    <button style="    width: 40px; padding: 0; height: 40px;" onclick="printSchedule()"><img src="./img/icons/print.png" style="width: 100%;"></button>  
+                    <button class="membershipForm__buttonCancel" onclick="closeSchedule()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+                </div>	
+                <div class="" id="schedule"></div>    
+                <div id="printScheduleDiv" style="display: none;"></div>                                  
+            </div>
+        </div>
+		<script src="./src/general.js"></script>
+		<script src="./src/sendToServer.js"></script>
+        <script src="./src/admin.js"></script>
+        <script src="./chart.js/dist/Chart.js"></script>
+		
+	</body>
+</html>

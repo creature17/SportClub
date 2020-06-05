@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald&display=swap" rel="stylesheet">
+    
+    <title></title>
+</head>
+	<body id="indexbody">		
+        <script src="./parts/header.js"></script>
+        <div class="help"><button onclick="showHelp('enter')">?</button></div>
+        <div class="login" id="enter" class="black_text">
+            <h2 class="black_text no_margin-top">Вход</h2>     
+            <div class="inputBlock">
+                <label for="loginEmail">Email</label>
+                <input id="loginEmail" type="email" placeholder="email@gmail.com" onblur="validateEmail('loginEmail')" onfocus="removeErrorEmail()">                    
+            </div>
+            <div id="wrongLoginEmail" class="wrongInput"></div>
+            <div class="inputBlock">
+                <label for="loginPassword">Пароль</label>
+                <input id="loginPassword" type="password" onblur="validatePassword('loginPassword')" onfocus="removeErrorPassword()">                    
+            </div>
+            <div id="wrongLoginPassword" class="wrongInput"></div>
+            <div class="inputBlock margin-top20 btnLogReg">
+                <button class="systemButton" onclick="enterCustomer()">Войти</button>
+                <button class="systemButton" onclick="openRegistration()">Регистрация</button>
+            </div>   
+        </div>
+        <div class="login not_visible" id="registration" class="black_text">
+            <div class="regHeader">
+                <img src="./img/icons/left_arrow.png" class="backArrow" onclick="backToLogin()">
+                <h2 class="black_text no_margin-top"> Регистрация</h2>
+            </div>  
+            <div class="inputBlock">
+                <label for="regEmail">Email</label>
+                <input id="regEmail" type="email" placeholder="email@gmail.com" 
+                onblur="validateEmail('regEmail')" onfocus="removeErrorEmail()">                      
+            </div>
+            <div id='wrongRegEmail' class="wrongInput"></div>
+            <div class="inputBlock">
+                <label for="regPassword">Пароль</label>
+                <input id="regPassword" type="password"
+                placeholder="пароль не менее 8 символов" 
+                onblur="validatePassword('regPassword')" 
+                onfocus="removeErrorPassword()">   
+            </div>
+            <div id="wrongRegPassword" class="wrongInput"></div>
+            <div class="inputBlock">
+                <label for="regPasswordRepeat">Пароль</label>
+                <input id="regPasswordRepeat" type="password" placeholder="повторите пароль" 
+                onblur="validatePasswordRepeat()" onfocus="removeErrorPasswordRepeat()">                    
+            </div> 
+            <div id="wrongRegPasswordRepeat" class="wrongInput"></div>
+            <div class="inputBlock margin-top20 btnLogReg">
+                <button class="systemButton" onclick="doRegistration()">Зарегистрироваться</button>
+            </div>                            
+        </div>
+		<div id="message_box" class="login">
+            <p class="black_text" id="textMessageBox"></p>
+            <div id="message_box__buttons">
+                <button id="buttonMessageBox" class="systemButton"></button>
+            </div>            
+        </div>
+
+        <script src="./parts/footer.js"></script>
+        <script src="./src/sendToServer.js"></script>
+        <script src="./src/general.js"></script>
+        <script src="./src/login.js"></script>
+       
+	</body>
+</html>

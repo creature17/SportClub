@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald&display=swap" rel="stylesheet">    
+   	<title></title>
+</head>
+	<body>
+		<script src="./parts/header_customer.js"></script>		
+		<div class="help"><button onclick="showHelp('aboutcustomerpage')">?</button></div>
+		<div class="customerPage">
+			<div class="customerPage__menu">
+				<button href="" id="customerMembershipInfo" onclick="setActiveLink(this.id);drawCustomerMembership()">Мой абонемент</button>
+				<button href="" id="customerTrainingsInfo"  onclick="setActiveLink(this.id);drawCustomerTrainings()">Мои тренировки</button>
+				<button href="" id="settings"  onclick="setActiveLink(this.id);drawSettings()">Настройки</button>
+			</div>
+			<div class="customerPage__info" id='customerPage__info'></div>
+			<div class="emptyShadow"></div>
+		</div>        
+		<div id="mark" class="membershipForm_background">
+			<div class="membershipForm" style="width: 200px;">
+				<div class="membershipForm__header">
+					<h2 class="black_text" style="margin: 0;">Оценка</h2>
+					<button class="membershipForm__buttonCancel" onclick="closeMark()"><img src="./img/icons/cancel.png" class="cancel_button"></button>
+				</div>	
+				<div class="stars">
+					<input type="radio" onclick="setMark(1)">
+					<input type="radio" onclick="setMark(2)">
+					<input type="radio" onclick="setMark(3)">
+					<input type="radio" onclick="setMark(4)">
+					<input type="radio" onclick="setMark(5)">
+				</div>     
+				<div class="stars">
+					<p>1</p>
+					<p>2</p>
+					<p>3</p>
+					<p>4</p>
+					<p>5</p>
+				</div>                                
+			</div>
+		</div>
+
+		<script src="./parts/footer.js"></script>
+		<script src="./src/general.js"></script>
+		<script src="./src/generalCustomer.js"></script>
+		<script src="./src/sendToServer.js"></script>
+		<script src="./src/pageCustomer.js"></script>
+		
+	</body>
+</html>
